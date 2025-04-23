@@ -1,8 +1,8 @@
-import z, { boolean } from 'zod'
+import {z} from 'zod'
 
 export const createTodo = z.object({
-    title:z.string(),
-    description:z.string()
+    title:z.string().min(1),
+    description:z.string().min(1)
 })
 
 export const updateTodo = z.object({

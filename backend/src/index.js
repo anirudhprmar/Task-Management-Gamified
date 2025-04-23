@@ -1,6 +1,6 @@
 import express from "express"
 import dotenv from 'dotenv'
-import { createTodo,updateTodo } from "./types";
+import { createTodo,updateTodo } from "./types.js";
 import { connectDB , todo} from "./db/db.js";
 
 dotenv.config()
@@ -41,13 +41,12 @@ app.post('/todo',async(req,res)=>{
       }
   
   
-      await todo.create({...validatedTodo,completed:false})
   
-      // await todo.create({
-      // title:validatedTodo.title
-      // description:validatedTodo.description,
-      // completed:false
-      // })
+      await todo.create({
+      title:validatedTodo.data.title,
+      description:validatedTodo.data.description,
+      completed:false
+      })
   
   
       res.status(200).json({

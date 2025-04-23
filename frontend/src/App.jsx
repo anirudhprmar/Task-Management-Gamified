@@ -1,10 +1,14 @@
 import React from 'react'
+import CreateTodo from './components/CreateTodo'
+import Applayout from './components/layout/Applayout'
+import Todos from './components/Todos'
 
 function App() {
   return (
-    <div>
-      hi
-    </div>
+   <Applayout>
+      <CreateTodo/>
+      <Todos />
+   </Applayout>
   )
 }
 
