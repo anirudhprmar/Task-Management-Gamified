@@ -24,7 +24,7 @@ function Todos() {
   return (
     <div>
       {todos && todos.map(todo =>{
-        return <Todo key={todo._id} title={todo.title} description={todo.description} completed={todo.completed} />
+        return <Todo key={todo._id} title={todo.title} description={todo.description} completed={todo.completed}  />
       })}
     </div>
   )

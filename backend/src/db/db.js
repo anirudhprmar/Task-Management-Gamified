@@ -12,13 +12,3 @@ export const connectDB = async()=>{
 } 
 
 
-const todoSchema = mongoose.Schema({
-  title:String,
-  description:String,
-  completed:{
-    type:Boolean,
-    default:false
-  }
-})
-
-export const todo = mongoose.model('todos',todoSchema)
