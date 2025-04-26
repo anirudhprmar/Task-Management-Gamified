@@ -129,7 +129,7 @@ try {
     }
 
 
-    const updateUser = await User.findByIdAndUpdate(
+    const updatedUser = await User.findByIdAndUpdate(
         userId,
         updatedFields,
         {new:true}
