@@ -1,9 +1,11 @@
 import express from "express"
 import { inProgressTodo,allTodos,addTodo,completeTodo,deleteTodo } from "../controllers/todo.controller.js"
-// import protectRoute from "../middlewares/auth.middleware.js"
+import protectRoute from "../middlewares/auth.middleware.js"
 
 
 const router = express.Router()
+
+router.use(protectRoute)
 
 router.get('/', allTodos)
 
