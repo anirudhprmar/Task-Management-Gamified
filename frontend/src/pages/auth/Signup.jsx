@@ -62,7 +62,8 @@ function Signup() {
         <input
           name="password"
           type="password"
-          placeholder="*******"
+          placeholder="*******
+          "
           value={formData.password}
           onChange={handleChange}
         />
