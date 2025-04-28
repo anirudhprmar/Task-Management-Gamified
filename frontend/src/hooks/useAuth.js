@@ -2,6 +2,8 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 
 import { checkUserAuth,deleteUser,loginUser,logoutUser,signupUser} from "../services/authService";
 
+// also check the model for each like what is needed to make the api call , refer controller/ routes to understand what is needed
+
 //check auth
 export const useCheckAuth = ()=>{
    return useQuery({
