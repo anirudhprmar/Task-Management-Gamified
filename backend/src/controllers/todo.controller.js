@@ -5,15 +5,19 @@ import {Todo} from '../models/todo.model.js'
 export const allTodos = async(req,res)=>{
     
     try {
-        const todos = await Todo.find({})
+
+        const userId = req.user.id;
+
+        const todos = await Todo.find({createdBy:userId}) // only that particular user's todos
 
         res.status(200).json({
+            status:"success",
             todos
         })
         
     } catch (error) {
         console.log('error in all todos',error);
-        res.status(511).json({
+        res.status(500).json({
             msg:"internal server error"
         })
     }
@@ -22,6 +26,8 @@ export const allTodos = async(req,res)=>{
 
 export const addTodo = async(req,res)=>{
       try {
+
+        const userId = req.user.id
           // put a new todo
           const validatedTodo = createTodo.safeParse(req.body)
         
@@ -37,7 +43,8 @@ export const addTodo = async(req,res)=>{
           completed:false,
           dueDate:validatedTodo.data.dueDate || "",
           inProgress:false,
-          category:validatedTodo.data.category
+          category:validatedTodo.data.category,
+          createdBy:userId
 
           })
       

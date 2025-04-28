@@ -12,7 +12,8 @@ const todoSchema = mongoose.Schema({
         type:Boolean,
         default:false
     },
-    category:String
+    category:String,
+    createdBy:String
   },{timestamps:true})
   
   export const Todo = mongoose.model('todos',todoSchema)

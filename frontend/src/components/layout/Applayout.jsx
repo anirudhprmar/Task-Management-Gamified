@@ -1,9 +1,13 @@
-function Applayout({children}) {
+import { Outlet } from 'react-router-dom';
+
+
+function AppLayout() {
+  
     return (
       <div className="p-3">
-          {children}
+          <Outlet />
       </div>
     )
   }
   
-  export default Applayout
+  export default AppLayout
