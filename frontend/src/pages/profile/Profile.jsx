@@ -72,7 +72,7 @@ const handleChange = (e)=>{
       <form onSubmit={handleSubmit}>
 
         <img
-        src={checkAuth.data?.profilePic || selectedImg}
+        src={checkAuth?.profilePic || selectedImg}
         alt="profile"
         className="size-32 rounded-full object-cover border-4 "
         />
@@ -104,7 +104,7 @@ const handleChange = (e)=>{
 
 
         <label htmlFor="username">Bio</label>
-        <p className="px-4 py-2.5 bg-base-200 rounded-lg border">{checkAuth.data?.bio}</p>
+        <p className="px-4 py-2.5 bg-base-200 rounded-lg border">{checkAuth?.bio}</p>
         <a onClick={()=>{
           return (
             <div>
@@ -115,7 +115,7 @@ const handleChange = (e)=>{
         }}>Update bio</a>
 
         <label htmlFor="username">Username</label>
-        <p className="px-4 py-2.5 bg-base-200 rounded-lg border">{checkAuth.data?.username}</p>
+        <p className="px-4 py-2.5 bg-base-200 rounded-lg border">{checkAuth?.username}</p>
         <a onClick={()=>{
           return (
             <div>
@@ -126,7 +126,7 @@ const handleChange = (e)=>{
         }}>Update Username</a>
 
         <label htmlFor="username">Email</label>
-        <p className="px-4 py-2.5 bg-base-200 rounded-lg border">{checkAuth.data?.email}</p>
+        <p className="px-4 py-2.5 bg-base-200 rounded-lg border">{checkAuth?.email}</p>
         <a onClick={()=>{
           return (
             <div>

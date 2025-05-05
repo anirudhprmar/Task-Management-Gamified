@@ -1,46 +1,79 @@
 import{ useState } from 'react'
+import { useCreateTodo } from '../hooks/useTodos';
+import { Loader2 } from 'lucide-react';
+import {DateTimePicker} from 'react-datetime-picker'
 
 function CreateTodo() {
-  const [title,setTitle] = useState('')
-  const [desc,setDesc] = useState('')
+  const {mutate:createUserTodo , isLoading} = useCreateTodo()
+
+ const [formData,setFormData] = useState({
+  title:"",
+  note:"",
+  completed:false,
+  dueDate:"",
+  inProgress:false,
+  category:""
+ })
+
+ const handleSubmit =(e)=>{
+  e.preventDefault();
+  createUserTodo(formData,
+    {
+      onSuccess:()=>{
+        alert("todo created")
+        // toast -> todo created 
+      }
+    }
+  )
+}
+
   
-
+ 
   return (
-    <div>
-        <div className='flex flex-col w-fit border-black'>
+    <form onSubmit={handleSubmit}>
+        
             <label htmlFor="title">Title</label>
-            <input type="text" name="title" className='bg-gray-600 border-neutral-50 text-gray-100' placeholder='Go to gym' 
-            onChange={(e)=>setTitle(e.target.value)}
+            <input type="text" name="title"  placeholder='Go to gym' 
+            value={formData.title}
+            onChange={(e)=>setFormData(e.target.value)}
             />
-        </div>
-
-        <div className='flex flex-col w-fit '>
-            <label htmlFor="title">Description</label>
-            <input type="text" name="title" className='bg-gray-600 border-neutral-50 text-gray-100' placeholder='hit legs , 10 reps'
-            onChange={(e)=>setDesc(e.target.value)}
+       
+            <label htmlFor="title">Note</label>
+            <input type="text" name="title" placeholder='hit legs , 10 reps'
+            value={formData.note}
+            onChange={(e)=>setFormData(e.target.value)}
             />   
-        </div>
 
-      <button
-      onClick={async()=>{
-        const res = await fetch('http://localhost:5001/todo',{
-          method:'POST',
-          body:JSON.stringify({
-            title:title,
-            description:desc
-          }),
-          headers:{
-            "content-Type":"application/json"
-          }
-        })
+            <label htmlFor="title">Completed:</label>
+            <input type="checkbox" name="title" placeholder='hit legs , 10 reps'
+            value={formData.completed}
+            onChange={(e)=>setFormData(e.target.value)}
+            />   
 
-        await res.json()
+            <label htmlFor="title">Due Date</label>
+            {/* <input type="text" name="title" placeholder='hit legs , 10 reps'
+            value={formData.dueDate}
+            onChange={(e)=>setFormData(e.target.value)}
+            />    */}
+            <DateTimePicker   value={formData.dueDate}
+            onChange={(e)=>setFormData(e.target.value)}/>
 
-       alert('todo added')
-      
-      }}
-      >Add a todo</button>
-    </div>
+
+            <label htmlFor="title">Status</label>
+            <input type="text" name="title" placeholder='hit legs , 10 reps'
+            value={formData.inProgress}
+            onChange={(e)=>setFormData(e.target.value)}
+            />   
+
+            <label htmlFor="title">Category</label>
+            <input type="text" name="title" placeholder='hit legs , 10 reps'
+            value={formData.category}
+            onChange={(e)=>setFormData(e.target.value)}
+            />   
+        
+
+      <button type='submit' className={isLoading ? <Loader2 size={4}/> : ""}>Add a todo</button>
+    </form>
   )
 }
 

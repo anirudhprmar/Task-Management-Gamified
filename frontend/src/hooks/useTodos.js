@@ -23,13 +23,13 @@ export const useCompleteTodo = ()=>{
         mutationFn:completeTodo
     })
 }
-//complete todo
+//workin todo
 export const useCurrentTodo = ()=>{
     return useMutation({
         mutationFn:workingTodo
     })
 }
-//complete todo
+//delete todo
 export const useDeleteTodo = ()=>{
     return useMutation({
         mutationFn:deleteTodo
