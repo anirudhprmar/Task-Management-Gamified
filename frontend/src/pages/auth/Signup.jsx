@@ -1,32 +1,26 @@
-import { useState } from 'react';
 import { useSignup } from '../../hooks/useSignup';
 import {MoveRight, LoaderCircle} from 'lucide-react'
 import { Navigate, Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
 function Signup() {
   const {mutate: signup , isLoading, error} = useSignup()
 
-  const [formData,setFormData] = useState({
-    username:"",
-    email:"",
-    password:"",
-  })
+  const {register, handleSubmit } = useForm()
 
-  const handleChange = (e)=>{
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.username]:e.target.value
-    }))
-  }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    signup(formData,{
+  const onSubmit = (data) => {
+    signup(data,{
       onSuccess:()=>{
         Navigate('/myDay')
       }
     });
   };
+
+  if(error){
+    toast.error("Error",error)
+  }
 
  
 
@@ -38,15 +32,14 @@ function Signup() {
     <section>
       <h1>Ready to Get Shit done ?</h1>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
 
         <label htmlFor="username">Username</label>
         <input
           name="username"
           type="text"
           placeholder="John Doe"
-          value={formData.name}
-          onChange={handleChange}
+          {...register("name")}
         />
 
         <label htmlFor="email">Email</label>
@@ -54,8 +47,7 @@ function Signup() {
           name="email"
           type="email"
           placeholder="johndoe@gmail.com"
-          value={formData.email}
-          onChange={handleChange}
+          {...register("email")}
         />
         
         <label htmlFor="password">Password</label>
@@ -64,8 +56,7 @@ function Signup() {
           type="password"
           placeholder="*******
           "
-          value={formData.password}
-          onChange={handleChange}
+          {...register("password")}
         />
 
         <button type="submit" disabled={isLoading}>

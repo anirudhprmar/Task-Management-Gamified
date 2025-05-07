@@ -1,33 +1,28 @@
-import { useState } from 'react';
 import { useLogin } from '../../hooks/useLogin';
 import {LoaderCircle} from 'lucide-react'
-import { Navigate } from 'react-router-dom';
+import { Navigate} from 'react-router-dom';
+import {useForm} from 'react-hook-form'
+import toast from 'react-hot-toast';
 
 
 function Login() {
   const { mutate: login, isLoading, error } = useLogin();
 
-  const [formData,setFormData] = useState({
-    email:"",
-    password:""
-  })
+  const { register, handleSubmit } = useForm();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    login(formData,{
+  const navigate = Navigate();
+
+  const onSubmit = (data) => {
+    login(data,{
       onSuccess:()=>{
-        Navigate('/myDay')
+        navigate('/myDay')
       }
-    });
-  };
-
-  const handleChange = () =>{
-    setFormData(prev => ({
-      ...prev
-    }))
+    })
   }
 
-
+  if (error) {
+    toast.error("Error",error)
+  }
 
   return (
    <main>
@@ -37,15 +32,14 @@ function Login() {
 
     <section>
       <h1>Get back to getting shit done</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
 
       <label htmlFor="email">Email</label>
       <input
         name="email"
         type="email"
         placeholder="johndoe@gmail.com"
-        value={formData.email}
-        onChange={handleChange}
+        {...register("email")}
       />
 
       <label htmlFor="password">Password</label>
@@ -54,21 +48,23 @@ function Login() {
         type="password"
         placeholder="*******
         "
-        value={formData.password}
-        onChange={handleChange}
+        {...register("password")}
       />
 
       <button type="submit" disabled={isLoading}>
         {isLoading ?  <LoaderCircle size={4} className=' animate-spin'/> : <div>
-          <span>Sign up <MoveRight/> </span>
+          <span>Login <MoveRight/> </span>
         </div>}
       </button>
 
       {error && <p className='text-red-800'>{error.message}</p>}
 
         <div>
-          <p>Already have an account?</p>
-          <Link to={'/login'}>Login Here</Link>
+          <p>Don't have an account?</p>
+               
+          <a onClick={()=>{
+            navigate('/signup')
+          }}>Signup Here</a> //navigate
         </div>
       </form>
     </section>
