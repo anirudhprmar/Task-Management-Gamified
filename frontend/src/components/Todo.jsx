@@ -1,6 +1,7 @@
 import React from 'react'
 import { useCompleteTodo, useCurrentTodo, useDeleteTodo } from '../hooks/useTodos'
 import {useNavigate} from 'react-router'
+import toast from 'react-hot-toast';
 
 function Todo({title,note,completed,dueDate, inProgress,category,id}) {
   const {mutate:deleteThisTodo,isLoading} =useDeleteTodo();
@@ -12,7 +13,7 @@ function Todo({title,note,completed,dueDate, inProgress,category,id}) {
   const handleTodoDelete = ()=>{
     deleteThisTodo(id,{
       onSuccess:()=>{
-        alert('todo deleted')
+        toast.success("Todo deleted")
       }
     })
   }
@@ -23,7 +24,7 @@ function Todo({title,note,completed,dueDate, inProgress,category,id}) {
 
   return (
     <div>
-      <h2>{title}</h2>
+      <h2 className={completed === true ? 'line-through' : ""}>{title}</h2>
       <p>{note}</p>
       <div>
         <button

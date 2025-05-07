@@ -1,6 +1,6 @@
 import { lazy } from 'react';
 import AppLayout from './components/layout/AppLayout'
-import {  , Route } from 'react-router-dom';
+import { Routes , Route } from 'react-router-dom';
 import TodaysTasks from './pages/app/TodaysTasks';
 import Login from './pages/auth/Login';
 import Signup from './pages/auth/Signup';
@@ -12,6 +12,7 @@ const Landing = lazy(() => import('./pages/Landing'));
 import NotFound from './pages/NotFound'
 import AuthLayout from './components/layout/AuthLayout';
 import ProtectedRoute from './components/auth/ProtectedRoute';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   return (
@@ -43,6 +44,8 @@ function App() {
           <Route path='*' element={<NotFound/>} />       
 
       </Routes>
+
+      <Toaster/>
     </div>
   )
 }

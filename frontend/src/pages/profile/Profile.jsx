@@ -1,22 +1,18 @@
 import { useState } from "react"
-import { useCheckAuth, useSignup } from "../../hooks/useAuth"
+import { useCheckAuth } from "../../hooks/useAuth"
 import { useUpdateProfile } from "../../hooks/useProfile"
 import {Camera, Dot} from 'lucide-react'
+import {toast} from 'react-hot-toast'
+import { useForm } from "react-hook-form"
 
 
 function Profile() {
 const {data: checkAuth} = useCheckAuth()
 const { mutate: updateProfile, isLoading:isUpdateProfileLoading}= useUpdateProfile()
 
-const {mutate:signup} = useSignup()
+const { register, handleSubmit, setValue } = useForm();
 
-const [formData,setFormData] = useState({
-  email:"",
-  username:"",
-  password:"",
-  profilepic:"",
-  bio:""
-})
+
 const [selectedImg,setSelectedImg] =  useState(null)
 
 const handleImageUpload = async (e)=>{  
@@ -32,44 +28,29 @@ const handleImageUpload = async (e)=>{
   reader.onload = async ()=>{
    const base64Image = reader.result;
    setSelectedImg(base64Image)
-   setFormData({profilePic:base64Image})
+   setValue("profilePic",base64Image)
   }
 
  }
 
-//if password is changed than we need to call signup api which will hash the new password
-
-const handleSubmit = (e)=>{
-  e.preventDefault()
-  updateProfile(formData,
-  //   {
-  //   onSuccess:()=>{
-  //     // toast -> profile updated
-      
-  //   }
-  // }
-)
-  signup({email:formData.email,password:formData.password,username:formData.username},{
-    onSuccess:()=>{
-      alert("Success profile updated");
+ 
+ const onSubmit = (data)=>{
+   updateProfile(data,
+    {
+      onSuccess:()=>{
+        toast.success("Profile updated")
+      }
     }
-  })
+  )
+  
 }
 
-const handleChange = (e)=>{
-  setFormData((prev) => ({
-    ...prev,
-    [e.target.username]:e.target.value,
-    [e.target.password]:e.target.value,
-    [e.target.bio]:e.target.value,
-    [e.target.email]:e.target.value
-  }))
-}
+const profilePicRegister = register("profilePic")
 
   return (
     <div>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
 
         <img
         src={checkAuth?.profilePic || selectedImg}
@@ -94,7 +75,11 @@ const handleChange = (e)=>{
         className="hidden"
         id="avatar-upload"
         accept="image/*"
-        onChange={handleImageUpload}
+        {...profilePicRegister}
+        onChange={(e)=>{
+          profilePicRegister.onChange(e);
+          handleImageUpload(e);
+        }}
         disabled={isUpdateProfileLoading}
         /> 
     
@@ -108,7 +93,7 @@ const handleChange = (e)=>{
         <a onClick={()=>{
           return (
             <div>
-              <input type="text" value={formData.bio} onChange={handleChange}/> 
+              <input type="text" {...register("bio")}/> 
               {/* new value will be passed to the form for bio */}
             </div>
           )
@@ -119,7 +104,7 @@ const handleChange = (e)=>{
         <a onClick={()=>{
           return (
             <div>
-              <input type="text" value={formData.username} onChange={handleChange}/> 
+              <input type="text" {...register("username")} /> 
               {/* new value will be passed to the form for username */}
             </div>
           )
@@ -130,24 +115,11 @@ const handleChange = (e)=>{
         <a onClick={()=>{
           return (
             <div>
-              <input type="text" value={formData.email} onChange={handleChange}/> 
+              <input type="text" {...register("email")}/> 
               {/* new value will be passed to the form for email */}
             </div>
           )
         }}>Update email</a>
-
-        <label htmlFor="username">Password</label>
-        <p className="px-4 py-2.5 bg-base-200 rounded-lg border"><Dot/><Dot/><Dot/><Dot/><Dot/><Dot/></p>
-        <a onClick={()=>{
-          return (
-            <div>
-              <label htmlFor="newPassword">New Password</label>
-              <input type="text" value={formData.password} onChange={handleChange}/> 
-              {/* new value will be passed to the form for password */}
-            </div>
-          )
-        }}>Update password</a>
-
 
       </form>
     </div>
