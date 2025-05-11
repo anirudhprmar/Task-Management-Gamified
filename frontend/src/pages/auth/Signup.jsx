@@ -1,4 +1,4 @@
-import { useSignup } from '../../hooks/useSignup';
+import { useSignup } from '../../hooks/useAuth';
 import {MoveRight, LoaderCircle} from 'lucide-react'
 import { Navigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';

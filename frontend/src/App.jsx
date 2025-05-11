@@ -1,4 +1,4 @@
-import { lazy } from 'react';
+import { lazy , Suspense} from 'react';
 import AppLayout from './components/layout/AppLayout'
 import { Routes , Route } from 'react-router-dom';
 import TodaysTasks from './pages/app/TodaysTasks';

@@ -1,4 +1,4 @@
-import { useLogin } from '../../hooks/useLogin';
+import { useLogin } from '../../hooks/useAuth';
 import {LoaderCircle} from 'lucide-react'
 import { Navigate} from 'react-router-dom';
 import {useForm} from 'react-hook-form'
@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 
 
 function Login() {
-  const { mutate: login, isLoading, error } = useLogin();
+  const { mutate: login, isLoading, error } = useLogin()
 
   const { register, handleSubmit } = useForm();
 
