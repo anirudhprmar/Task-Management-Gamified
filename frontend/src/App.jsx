@@ -13,6 +13,7 @@ import NotFound from './pages/NotFound'
 import AuthLayout from './components/layout/AuthLayout';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import { Toaster } from 'react-hot-toast';
+import Loader from './components/Loader';
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
     <div>
       <Routes>
          {/* Public routes */}
-         <Route path='/' element={<Suspense fallback={<div>Loading...</div>}><Landing /></Suspense>}/>
+         <Route path='/' element={<Suspense fallback={<Loader/>}><Landing /></Suspense>}/>
 
          {/* Auth routes */}
          <Route element={<AuthLayout />}>

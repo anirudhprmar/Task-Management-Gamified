@@ -2,6 +2,10 @@ import {Menu,X,CheckCircleIcon} from 'lucide-react'
 import { useRef, useState } from 'react'
 import { Link } from 'react-router'
 import Accordion from '../components/ui/Accordion'
+import {useGSAP} from '@gsap/react'
+import gsap from 'gsap'
+import {ScrollTrigger} from 'gsap/ScrollTrigger'
+gsap.registerPlugin(ScrollTrigger)
 
 function Landing() {
   const [isOpen,setIsOpen] = useState(false)
@@ -36,9 +40,121 @@ function Landing() {
   }
 ];
 
+const aboutRef = useRef(null)
+const demoRef = useRef(null)
+const headerRef = useRef(null)
+const heroRef = useRef(null)
+const faqRef = useRef(null)
+const footerRef = useRef(null)
 
-  const aboutRef = useRef(null)
-  const demoRef = useRef(null)
+
+useGSAP(() => {
+  gsap.fromTo(headerRef.current, 
+    {
+      y: -100,
+      opacity: 0
+    },
+    {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          ease: "power3.out"
+        }
+      );
+
+      // Hero section animation
+    gsap.fromTo(heroRef.current,
+      {
+        opacity: 0,
+        y: 100
+      },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1.5,
+        ease: "power3.out"
+      }
+    );
+
+      // About section animation
+    gsap.fromTo(aboutRef.current,
+      {
+        opacity: 0,
+        y: 100
+      },
+      {
+        scrollTrigger: {
+          trigger: aboutRef.current,
+          start: "top center+=100",
+          toggleActions: "play none none reverse"
+        },
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out"
+      }
+    );
+
+      // Demo section animation
+    gsap.fromTo(demoRef.current,
+      {
+        opacity: 0,
+        y: 100
+      },
+      {
+        scrollTrigger: {
+          trigger: demoRef.current,
+          start: "top center+=100",
+          toggleActions: "play none none reverse"
+        },
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out"
+      }
+    );
+
+      // FAQ section 
+    gsap.fromTo(faqRef.current,
+      {
+        opacity: 0,
+        y: 100
+      },
+      {
+        scrollTrigger: {
+          trigger: faqRef.current,
+          start: "top center+=100",
+          toggleActions: "play none none reverse"
+        },
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out"
+      }
+    );
+
+      // Footer animation
+    gsap.fromTo(footerRef.current,
+      {
+        opacity: 0,
+        y: 50
+      },
+      {
+        scrollTrigger: {
+          trigger: footerRef.current,
+          start: "top bottom-=100",
+          toggleActions: "play none none reverse"
+        },
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out"
+      }
+    );
+
+    },[]);
+
+
 
   const handleAboutScroll = ()=>{
     aboutRef.current?.scrollIntoView({
@@ -52,15 +168,15 @@ function Landing() {
   }
 
   return (
-    <div className='min-h-screen'>
-      <header className={`sticky top-0 z-50 bg-[#000101] backdrop-blur-smr`} >
-        <div className='container mx-auto px-4 md:px-10 md:py-3'>
+    <div className='min-h-screen bg-[#000101]'>
+      <header className={`sticky top-0 z-50 bg-[#000101] backdrop-blur-smr`}  >
+        <div className='container mx-auto px-4 md:px-10 md:py-3' ref={headerRef}>
           <nav className='relative' aria-label="Main navigation">
             {/* Primary Nav */}
             <div className='flex items-center justify-between h-16'>
               
               {/* logo */}
-              <Link to={'/'} className='font-italiana text-3xl hover:text-primary transition-colors md:text-5xl'>
+              <Link to={'/'} className='font-italiana text-3xl transition-colors md:text-5xl'>
                 Xecute
               </Link>
 
@@ -164,8 +280,8 @@ function Landing() {
       </header>
 
       <main className='container min-w-full'>
-        <section className={`bg-[url('../images/background.png')] bg-no-repeat bg-cover  bg-bottom min-h-screen py-24 `}>
-          <div className='flex flex-col items-center justify-center '>
+        <section  className={`bg-[url('../images/background.png')] bg-no-repeat bg-cover  bg-bottom min-h-screen py-24`}>
+          <div className='flex flex-col items-center justify-center ' ref={heroRef}>
             <div className='font-inter p-10 md:max-w-4xl'>
             <h1 className='text-4xl font-bold mb-6 leading-tight  min-w-full md:min-w-2xl md:text-7xl'>Stay on top of your tasks,effortlessly. </h1>
             <p className='text-md font-light md:text-2xl  md:py-5'>Transform your to-do list into a done list—start today, stay on track, and crush your goals.</p>
@@ -181,8 +297,8 @@ function Landing() {
           </div>
         </section>
 
-        <section className='bg-[#010606] min-h-full py-5' ref={aboutRef}>
-          <div>
+        <section className='bg-[#010606] min-h-full py-5' >
+          <div ref={aboutRef}>
             <div className='px-5 py-15'>
               <span className='text-3xl md:text-5xl font-bold text-left font-inter'>Measure. Improve. Repeat</span>
             </div>
@@ -213,8 +329,8 @@ function Landing() {
           </div>
         </section>
 
-        <section className='bg-[#010606] min-h-full py-5' ref={demoRef}>
-          <div>
+        <section className='bg-[#010606] min-h-full py-5' >
+          <div ref={demoRef}>
           <div className='px-5 py-15'>
               <span className='text-3xl md:text-5xl font-bold text-left'>Demo</span>
             </div>
@@ -230,8 +346,8 @@ function Landing() {
           </div>
         </section>
 
-        <section className='bg-[#010606] min-h-full py-5'>
-          <div>
+        <section className='bg-[#010606] min-h-full py-5' >
+          <div ref={faqRef}>
            <div className='px-5 py-15'>
               <span className='text-3xl md:text-5xl font-bold text-left'>FAQ</span>
             </div>
@@ -239,8 +355,8 @@ function Landing() {
             <div className='px-5 py-10 '>
               {faqs.map((item,index) =>{
                 return (
-                  <div key={index} className='py-2'>
-                    <Accordion question={item.question} solution={item.answer}/>
+                  <div key={index} className='py-2' >
+                    <Accordion question={item.question} solution={item.answer} />
                   </div>
                 )
               })}
@@ -252,7 +368,7 @@ function Landing() {
       </main>
 
       <footer className='container min-w-full bg-[#010606]'>
-        <div className='grid grid-cols-2 px-20 py-10 '>
+        <div className='grid grid-cols-2 px-20 py-10 '  ref={footerRef}>
           <div>
             <div>
               <span className='text-lg font-bold  font-inter underline'>SITEMAP</span>

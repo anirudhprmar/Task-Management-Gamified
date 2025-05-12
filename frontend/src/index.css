@@ -5,6 +5,18 @@
 @theme {
   --font-italiana: "Italiana", sans-serif;
   --font-inter:"Inter",sans-serif;
+
+  --animate-loading: loading 1.5s ease-in-out infinite;
+
+  @keyframes loading {
+    0% {
+       transform: translateX(-100%);
+      },
+    100% { 
+      transform: translateX(100%);
+    }
+  }
+
 }
 
 @plugin "daisyui"{
