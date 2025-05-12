@@ -24,7 +24,7 @@ function Signup() {
     toast.error("Error",error)
   }
 
- 
+ // eye for password
 
   return (
    <main className='min-h-screen bg-gray-50 text-gray-950 grid lg:grid-cols-2 mx-auto  container min-w-full grid-cols-1'>
@@ -51,7 +51,7 @@ function Signup() {
                 name="username"
                 type="text"
                 placeholder="John Doe"
-                {...register("name")}
+                {...register("username")}
                 className='text-xl px-4 py-2 rounded-lg border border-gray-300 bg-white/5 
                 focus:outline-none focus:ring-2 focus:ring-[#0A3E3E] focus:border-transparent 
                 transition-all duration-300 hover:border-[#0A3E3E]'

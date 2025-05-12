@@ -14,8 +14,7 @@ export const signup = async (req,res)=>{
               { username: validatedInput.username }
           ]
       });
-
-      if (existingUser) {
+  if (existingUser) {
           return res.status(400).json({
               status: 'fail',
               message: existingUser.email === validatedInput.email 
@@ -23,6 +22,7 @@ export const signup = async (req,res)=>{
                   : "Username already exists"
           });
       }
+    
 
        const salt = await bcrypt.genSalt(10);
        const hashedPassword = await bcrypt.hash(validatedInput.password,salt)
