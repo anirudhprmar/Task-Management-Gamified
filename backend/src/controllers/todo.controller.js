@@ -41,9 +41,9 @@ export const addTodo = async(req,res)=>{
           title:validatedTodo.data.title,
           note:validatedTodo.data.note,
           completed:false,
-          dueDate:validatedTodo.data.dueDate || "",
+        //   dueDate:validatedTodo.data.dueDate || "",
           inProgress:false,
-          category:validatedTodo.data.category,
+          category:validatedTodo.data.category || "",
           createdBy:userId
 
           })

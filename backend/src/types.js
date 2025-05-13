@@ -1,12 +1,12 @@
 import {z} from 'zod'
 
 export const createTodo = z.object({
-    title: z.string().min(1, "Title is required"),
+    title: z.string(),
     note: z.string(),
-    category: z.string(),
-    dueDate: z.string().optional(),
-    completed: z.boolean().default(false),
-    inProgress: z.boolean().default(false)
+    category: z.string().optional(),
+    // dueDate: z.string().optional(),
+    completed: z.boolean().default(false), // this might cause an issue
+    inProgress: z.string().default("false")
 })
 
 export const ValidateIdToUpdate = z.object({

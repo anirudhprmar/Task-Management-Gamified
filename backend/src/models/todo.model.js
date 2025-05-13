@@ -7,7 +7,7 @@ const todoSchema = mongoose.Schema({
       type:Boolean,
       default:false
     },
-    dueDate:String,
+    // dueDate:String,
     inProgress:{
         type:Boolean,
         default:false

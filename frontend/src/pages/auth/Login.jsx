@@ -1,14 +1,17 @@
 import { useLogin } from '../../hooks/useAuth';
-import {LoaderCircle,MoveRight} from 'lucide-react'
+import {EyeOff, LoaderCircle,MoveRight,Eye} from 'lucide-react'
 import { Link, useNavigate} from 'react-router-dom';
 import {useForm} from 'react-hook-form'
 import toast from 'react-hot-toast';
+import { useState } from 'react';
 
 
 function Login() {
   const { mutate: login, isLoading, error } = useLogin()
 
   const { register, handleSubmit } = useForm();
+
+  const [isPasswordVisible,setIsPasswordVisible] = useState(false)
 
   const navigate = useNavigate();
 
@@ -57,11 +60,11 @@ function Login() {
               />
             </div>
 
-            <div className='flex flex-col gap-1 xl:w-xl'>
+            <div className='flex flex-col gap-1 xl:w-xl relative'>
               <label htmlFor="password" className='text-2xl'>Password</label>
               <input
                 name="password"
-                type="password"
+                type={ isPasswordVisible ? "text" : "password"}
                 placeholder="*******
                 "
                 {...register("password")}
@@ -69,6 +72,12 @@ function Login() {
                 focus:outline-none focus:ring-2 focus:ring-[#0A3E3E] focus:border-transparent 
                 transition-all duration-300 hover:border-[#0A3E3E]'
               />
+              <button
+              className=' absolute right-4 top-[60%]  cursor-pointer'
+              onClick={()=> setIsPasswordVisible(!isPasswordVisible)}
+              >
+                {isPasswordVisible ? <EyeOff/> : <Eye/>}
+              </button>
             </div>
 
 

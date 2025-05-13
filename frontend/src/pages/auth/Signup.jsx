@@ -1,11 +1,14 @@
 import { useSignup } from '../../hooks/useAuth';
-import {MoveRight, LoaderCircle} from 'lucide-react'
+import {MoveRight, LoaderCircle,EyeOff,Eye} from 'lucide-react'
 import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { useState } from 'react';
 
 function Signup() {
   const {mutate: signup , isLoading, error} = useSignup()
+
+  const [passwordVisible,setPasswordVisible] = useState(false)
 
   const {register, handleSubmit } = useForm()
 
@@ -24,7 +27,7 @@ function Signup() {
     toast.error("Error",error)
   }
 
- // eye for password
+ // eye for password very imp
 
   return (
    <main className='min-h-screen bg-gray-50 text-gray-950 grid lg:grid-cols-2 mx-auto  container min-w-full grid-cols-1'>
@@ -71,18 +74,23 @@ function Signup() {
               />
             </div>
 
-            <div className='flex flex-col gap-1 xl:w-xl'> 
+            <div className='flex flex-col gap-1 xl:w-xl relative '> 
               <label htmlFor="password">Password</label>
               <input
                 name="password"
-                type="password"
+                type={passwordVisible ? "text" : "password"}
                 placeholder="*******
                 "
                 className='text-xl px-4 py-2 rounded-lg border border-gray-300 bg-white/5 
                 focus:outline-none focus:ring-2 focus:ring-[#0A3E3E] focus:border-transparent 
-                transition-all duration-300 hover:border-[#0A3E3E]'
+                transition-all duration-300 hover:border-[#0A3E3E]  '
                 {...register("password")}
               />
+              <button
+              className=' absolute right-4 top-1/2 cursor-pointer'
+              onClick={()=> setPasswordVisible(!passwordVisible)}
+              > 
+                {passwordVisible ? <EyeOff/> : <Eye/>}</button>
             </div>
 
 
