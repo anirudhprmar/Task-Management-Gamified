@@ -26,26 +26,24 @@ function CreateTodo() {
   return (
     <div className=''>
       <form onSubmit={handleSubmit(onSubmit)}
-      className=' grid grid-cols-1 justify-center items-center'
+      className=' grid grid-cols-1 justify-center items-center font-inter'
       >
 
-        <div className=' flex flex-col'>
-          <label htmlFor="title">Title:</label>
-          <input type="text" {...register("title",{required:"Title is required"})}  placeholder='Go to gym' 
+        <div className=' flex flex-col gap-3 pb-5'>
+          <label htmlFor="title" className='font-bold text-lg md:text-xl lg-text-2xl'>Title</label>
+          <input type="text" {...register("title",{required:"Title is required"})}  placeholder='Go to gym' className='text-xl px-4 py-2 rounded-lg border border-gray-300 bg-white/5 
+                focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-transparent 
+                transition-all duration-300 hover:border-green-200'
           />
         </div>
 
-        <div className='flex flex-col'>
-          <label htmlFor="note">Note:</label>
-          <input type="text" {...register("note")} placeholder='hit legs , 10 reps'
+        <div className='flex flex-col gap-3 pb-5'>
+          <label htmlFor="note" className='font-bold text-lg md:text-xl lg-text-2xl'>Note</label>
+          <input type="text" {...register("note")} placeholder='hit legs , 10 reps' className='text-xl px-4 py-2 rounded-lg border border-gray-300 bg-white/5 
+                focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-transparent 
+                transition-all duration-300 hover:border-green-200'
           />   
         </div>
-
-        {/* <div>
-          <label htmlFor="completed">Completed:</label>
-          <input type="radio" value="yes" {...register("completed")}
-          />   
-        </div> */}
         
 
         {/* <div>
@@ -59,34 +57,26 @@ function CreateTodo() {
           />
         </div> */}
 
-        <div className='flex gap-5'>
-          <label htmlFor="status">Working on it :</label>
-          <label>
-            <input type="radio" value={false} {...register("inProgress")} />
+        <div className='flex gap-6 pb-5'>
+          <label htmlFor="status" className='font-bold text-lg md:text-xl lg-text-2xl '>Work on it</label>
+          <label className='text-lg md:text-xl lg:text-2xl font-bold flex gap-2'>
+            <input  type="radio" value={false} {...register("inProgress")} />
             No
           </label>
 
-          <label>
-            <input type="radio" value={true} {...register("inProgress")} />
+          <label className='text-lg md:text-xl lg:text-2xl font-bold flex gap-2'>
+            <input  type="radio" value={true} {...register("inProgress")} />
             Yes
           </label>
 
         </div>
 
-        <div className='flex gap-4 pb-5'>
-          <label htmlFor="category">Category</label>
-          <input type="text"  placeholder='health,work ...'
-          {...register("category")}
-          />   
-        </div>
-        
-          
 
-              <button type='submit' disabled={isLoading}
-              className='p-2 bg-green-500 rounded-xl text-xl'
-              >
-                {isLoading ? <Loader2 size={16} className="animate-spin inline" /> : "Add a todo"}
-              </button>
+          <button type='submit' disabled={isLoading}
+          className='p-2 bg-green-500 rounded-xl text-xl'
+          >
+            {isLoading ? <Loader2 className="animate-spin size-2" /> : "Add a todo"}
+          </button>
 
       </form>
     </div>

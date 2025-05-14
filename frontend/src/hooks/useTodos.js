@@ -6,7 +6,7 @@ import { allTodos, completeTodo, createTodo, deleteTodo, workingTodo} from "../s
 export const useAllTodos = ()=>{
     return useQuery({
         queryKey:['allUserTodos'],
-        queryFn:allTodos
+        queryFn:allTodos,
     })
 }
 

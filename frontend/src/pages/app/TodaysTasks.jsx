@@ -1,4 +1,4 @@
-import { LoaderCircleIcon, PencilIcon } from 'lucide-react'
+import { LoaderCircle, PencilIcon } from 'lucide-react'
 import CreateTodo from '../../components/CreateTodo'
 import Todo from '../../components/Todo'
 import Modal from '../../components/ui/Modal'
@@ -14,29 +14,30 @@ function TodaysTasks() {
   }
 
   if(isLoading){
-    return (<div className='min-h-screen bg-[#000101]'>
-      <LoaderCircleIcon className='size-4 animate-spin' />
+    return ( <div className="flex items-center justify-center min-h-screen">
+      <LoaderCircle className="size-10 animate-spin" />
     </div>)
   }
+  
+  // i WANT THAT WHEN A USER CREATES A NEW TODO , A REQ SHOULD HIT THE BACKEND REQUESTING NEW TODOS WHICH CAN GET RENDERED IMMEDIATELY AFTER CREATING AND THE USER IS ABLE TO SEE THE TODO HE CREATED
+  // HOW TO DO THAT ?????
+  // 
 
   const allTodos = allUserTodos.todos
 
   return (
 
-    <main>
+    <main className=' mx-auto py-5'>
       <section>
-        <div className=' '> 
-          Todo's here
-          {console.log(allUserTodos.todos)};
-          
+        <div className='grid grid-cols-1 px-8 lg:grid-cols-3 lg:gap-5'> 
           { allTodos.length < 1 ? "no todos by user at the moment" : allTodos.map((todo)=>{
-            return <Todo key={todo._id} id={todo._id} title={todo.title} note={todo.note} completed={todo.completed} dueDate={todo.dueDate} inProgress={todo.inProgress} category={todo.category} />
+            return <Todo key={todo._id} id={todo._id} title={todo.title} note={todo.note} completed={todo.completed} dueDate={todo.dueDate} inProgress={todo.inProgress}  />
           })}
           
         </div>
 
-        <div className='absolute right-10 top-10'>
-          <Modal openMsg={<PencilIcon/>} children={<CreateTodo/>} />     
+        <div className='absolute right-2 bottom-20'>
+          <Modal openMsg={<PencilIcon className='text-gray-900'/>} children={<CreateTodo/>} />     
         </div>
       </section>     
 
