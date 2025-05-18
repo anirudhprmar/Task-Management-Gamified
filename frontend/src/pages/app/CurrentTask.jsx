@@ -1,7 +1,6 @@
-import React from 'react'
 import { useAllTodos, useCompleteTodo,  } from '../../hooks/useTodos'
 import { useNavigate } from 'react-router'
-import { Loader2 } from 'lucide-react'
+import { LoaderCircle } from 'lucide-react'
 
 function CurrentTask() {
 
@@ -10,36 +9,39 @@ function CurrentTask() {
   const navigate = useNavigate()
 
   if (isLoading) {
-    return <Loader2 className='size-3'/>
+    return ( <div className="flex items-center justify-center min-h-screen">
+      <LoaderCircle className="size-10 animate-spin" />
+    </div>)
   }
 
-  const handleCompleteTodo = (e)=>{
-    e.preventDefault()
-    completedThisWorkingTodo(currentTodo._id)
+  const handleCompleteTodo = (todoId)=>{
+    completedThisWorkingTodo(todoId)
     navigate('/myDay')
   }
 
-  const currentTodo = ()=>{
-   return todo.filter(todo => todo.inPrgress === 'true')
-  }
+
+const TodoItems = todo.todos || [];
+  
+
+  const currentTodos = TodoItems.filter(todo => todo.inProgress === true)
+  // if todo is completed then no need to enter current task , keep it empty 
+  
 
   return (
-    <div>
-
-      {currentTodo.length > 1 ?  
-        <div>
-          <h2>{currentTodo?.title}</h2>
-          <p>{currentTodo?.note}</p>
-          <p>{currentTodo?.inProgress}</p>
-          <button onClick={handleCompleteTodo}>Completed</button>
-        </div> 
-        : "not working on any task"   
-      }
-
-     
-      {/* 
-      and and a ball or orb pulsating and when done click on completed btn and move to tasks of the day back
-      */}
+   <div className='py-5 px-10'>
+     {currentTodos ?  currentTodos.map(todo => (
+      <div key={todo._id} className='py-7' >
+        <div className=' border border-gray-50 w-fit p-3'>
+          <h1 className='text-2xl font-italiana '>{todo.title}</h1>
+          <p>{todo.note}</p>
+          <button onClick={() => handleCompleteTodo(todo._id)} className='bg-green-300 font-bold rounded cursor-pointer p-1 text-xl text-gray-900 w-fit'>Completed ? </button> 
+        </div>
+      </div>
+     )): (
+        <div className='text-left text-2xl py-10 font-bold font-inter'>
+          Not Working on any Task
+        </div>
+      )}
     </div>
   )
 }

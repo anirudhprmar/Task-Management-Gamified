@@ -9,13 +9,7 @@ export const createTodo = z.object({
     inProgress: z.string().default("false")
 })
 
-export const ValidateIdToUpdate = z.object({
-    id:z.string(),
-    updates:z.object({
-        completed:z.boolean(),
-        inProgress:z.boolean()
-    }).partial()
-})
+
 
 
 export const signupSchema = z.object({

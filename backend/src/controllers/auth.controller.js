@@ -136,9 +136,11 @@ try {
         return res.status(404).json({msg:"User not found"})
     }
 
-    if (!bio || !email || !username ) {
-        return res.status(400).json({msg:"This field is required"})
-    }
+    // if (!bio || !email || !username ) {
+    //     return res.status(400).json({msg:"This field is required"})
+    // }
+
+    // any data can be sent 
 
     const updatedFields = {
         bio,

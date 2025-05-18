@@ -1,42 +1,44 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Home, Notebook, Menu, User, Clock, Calendar,X } from 'lucide-react';
-import { useCheckAuth } from '../hooks/useAuth';
-import { useEffect, useState } from 'react';
+// import { useCheckAuth } from '../hooks/useAuth';
+import { useState } from 'react';
 
 function Sidebar() {
   const location = useLocation();
-  const {data:checkAuth} = useCheckAuth()
+  // const {data:checkAuth} = useCheckAuth()
 
-   useEffect(()=>{
-      checkAuth
-    },[checkAuth])
+  //  useEffect(()=>{
+  //     checkAuth
+  //   },[checkAuth])
+
+  //gotta bring that profile image too 
 
     
 
   const navItems = [
     { icon: Home, label: 'My Day', path: '/myDay' },
     { icon: Clock, label: 'Ongoing Task', path: '/onGoing' },
-    {icon: Notebook,label:"Reflect", path:'/reflect'},
-    { icon: Calendar, label: 'Weekly Goals', path: '/weeklyGoals' },
     { icon: User , label: 'Profile', path: '/profile' },
   ];
 
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(true)
 
   const handleToggle = ()=>{
     setIsOpen(!isOpen)
   }
 
+  // want to show icons on closing sidebar -> not completely closed
   return (
-    <div className=''>
+    <div className={isOpen ? 'min-h-screen w-20 sm:w-80 px-3 py-3  ' : 'min-h-screen w-0  px-3 py-3 '} >
 
       {/* Navigation Section */}
       <nav className="">
         <ul className=" ">
-          <li>
+          <li className='pb-5'>
              <button
               aria-label={isOpen ? "Close menu" : "Open menu"}
               onClick={handleToggle}
+              className='cursor-pointer'
               >
                 {isOpen ? <X /> : <Menu />}
               </button>
@@ -46,7 +48,7 @@ function Sidebar() {
             const isActive = location.pathname === item.path;
 
             return (
-              <li key={item.path} className={isOpen ? ' block' :'hidden'}>
+              <li key={item.path} className={isOpen ? ' block py-2' :'hidden'}>
                 <Link
                   to={item.path}
                   className={` flex items-center gap-3 px-4 py-2 rounded-lg transition-colors

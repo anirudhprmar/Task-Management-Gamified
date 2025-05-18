@@ -3,17 +3,18 @@ import { useCompleteTodo, useCurrentTodo, useDeleteTodo } from '../hooks/useTodo
 import {useNavigate} from 'react-router'
 import toast from 'react-hot-toast';
 
-function Todo({title,note,completed,dueDate, inProgress,id}) {
+function Todo({title,note,dueDate,completed, inProgress,todoId}) {
   const {mutate:deleteThisTodo,isLoading} =useDeleteTodo();
   const {mutate:todoCompleted} = useCompleteTodo()
   const {mutate:workingOnThisTodo} = useCurrentTodo()
 
   const [working,setWorking] = useState(false)
+  const [isChecked,setIsChecked] = useState(false)
 
   const navigate = useNavigate()
 
   const handleTodoDelete = ()=>{
-    deleteThisTodo(id,{
+    deleteThisTodo(todoId,{
       onSuccess:()=>{
         toast.success("Todo deleted")
       }
@@ -24,8 +25,6 @@ function Todo({title,note,completed,dueDate, inProgress,id}) {
    return <div>deleting....</div>
   }
 
-            //TODO COMPLETED -> A CHECK BOX FOR THE TODO 
-            //IN PROGRESS ->  A GREEN DOT PULSATING SAYING WOKRING AND IF NOT A RED DOT PENDING
 
   return (
     
@@ -34,11 +33,12 @@ function Todo({title,note,completed,dueDate, inProgress,id}) {
         <div className='bg-green-100 text-gray-800 p-2 rounded-xl flex flex-col '>
 
           <label className='flex items-center'>
-            <input type="checkbox" onClick={()=>{
-              todoCompleted(id)
+            <input type="checkbox" value={isChecked} onChange={()=>{
+              setIsChecked(!isChecked)
+              todoCompleted(todoId)
             }} className='size-4'/>
 
-            <span className={completed === true ? 'line-through ' : "text-2xl px-2 font-bold font-italiana"}>{title}</span>
+            <span className={isChecked || completed ? "line-through text-2xl px-2 font-bold font-italiana " : "text-2xl px-2 font-bold font-italiana"}>{title}</span>
 
           </label>
 
@@ -48,13 +48,22 @@ function Todo({title,note,completed,dueDate, inProgress,id}) {
           <button
           onClick={()=>{
             setWorking(!working)
-            workingOnThisTodo(id)
+            workingOnThisTodo(todoId)
             navigate('/onGoing')
             }}
             className=' cursor-pointer py-1 pb-2 text-left font-inter'
-            >{working === false ? "Work on it" : ""}
+            >{working ? <div>Working</div> : <div>Work on it</div>}
             <div>
-            {inProgress ? "blink green dot ":" red dot"}
+            {inProgress ? 
+              <span className='relative flex h-3 w-3'>
+                <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75'></span>
+              <span className='relative inline-flex rounded-full h-3 w-3 bg-green-500'></span>
+              </span>:
+              <span className='relative flex h-3 w-3'>
+                <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75'></span>
+              <span className='relative inline-flex rounded-full h-3 w-3 bg-red-500'></span>
+              </span>
+            }
             </div>
             </button>
         

@@ -6,8 +6,6 @@ import Login from './pages/auth/Login';
 import Signup from './pages/auth/Signup';
 import CurrentTask from './pages/app/CurrentTask';
 import Profile from './pages/profile/Profile';
-import Reflect from './pages/app/Reflect';
-import WeeklyGoals from './pages/app/WeeklyGoals';
 const Landing = lazy(() => import('./pages/Landing'));
 import NotFound from './pages/NotFound'
 import AuthLayout from './components/layout/AuthLayout';
@@ -35,8 +33,6 @@ function App() {
               <Route element={<AppLayout/>} >
                 <Route path='/myDay' element={<TodaysTasks />} />
                 <Route path='/onGoing' element={<CurrentTask />} />
-                <Route path='/reflect' element={<Reflect />} />
-                <Route path='/weeklyGoals' element={<WeeklyGoals />} />
                 <Route path='/profile' element={<Profile />} />
               </Route>
           </Route>

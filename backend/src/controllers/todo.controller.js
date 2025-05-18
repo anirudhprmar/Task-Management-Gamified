@@ -1,4 +1,4 @@
-import { createTodo,ValidateIdToUpdate } from "../types.js";
+import { createTodo } from "../types.js";
 import {Todo} from '../models/todo.model.js'
 
 
@@ -62,20 +62,22 @@ export const addTodo = async(req,res)=>{
 
 }
 
-export const completeTodo = async(req,res)=>{
-  
-    
+export const completeTodo = async(req,res)=>{  
        try {
-        const validatedTodoId = ValidateIdToUpdate.safeParse(req.params)
-        
-        if (!validatedTodoId.success) {
-            return res.status(411).json({
-                msg:"todo does not exist"
-            })
+
+        const {todoId} = req.params
+
+         const selectedTodo = await Todo.findById(todoId)
+
+        if (!selectedTodo) {
+        return res.status(404).json({
+            status: 'fail',
+            message: 'Todo not found'
+        });
         }
-    
+        
         await Todo.updateOne({
-            _id:req.body.id
+            _id:todoId
         },{
             completed:true
         })
@@ -95,19 +97,21 @@ export const completeTodo = async(req,res)=>{
 
 export const inProgressTodo = async(req,res)=>{
     
-    
        try {
         
-        const validatedTodoId = ValidateIdToUpdate.safeParse(req.params)
-        
-        if (!validatedTodoId.success) {
-            return res.status(411).json({
-                msg:"todo does not exist"
-            })
+        const {todoId} = req.params
+
+          const selectedTodo = await Todo.findById(todoId)
+
+        if (!selectedTodo) {
+        return res.status(404).json({
+            status: 'fail',
+            message: 'Todo not found'
+        });
         }
     
         await Todo.updateOne({
-            _id:req.body.id
+            _id:todoId
         },{
             inProgress:true
         })
